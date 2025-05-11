@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "examplemod:blocks/"
+    "all": "examplemod:blocks/myblock_up"
   }
 }

@@ -53,7 +53,7 @@ public class ExampleMod {
     public static class RegistryEvents {
         private static final RegisterBlockData[] registerBlocks = {
                 // ここにBlockを書いてね！
-
+                new RegisterBlockData(BLOCK_MYBLOCK),
         };
 
         private static final Item[] registerItems = {
