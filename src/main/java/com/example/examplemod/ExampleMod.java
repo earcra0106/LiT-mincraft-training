@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.javaskip.PlayerDeathEventHandler;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
@@ -37,6 +38,7 @@ public class ExampleMod {
     public ExampleMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        MinecraftForge.EVENT_BUS.register(new PlayerDeathEventHandler());
 
         MinecraftForge.EVENT_BUS.register(this);
     }
