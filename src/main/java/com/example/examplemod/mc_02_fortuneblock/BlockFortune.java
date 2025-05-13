@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class BlockFortune extends Block{
     public BlockFortune() {
-        super(BlockBehaviour.Properties.of(Material.STONE).strength(30f));
+        super(Block.Properties.of(Material.STONE).strength(30f));
     }
 
     // 左クリックされると呼び出される
