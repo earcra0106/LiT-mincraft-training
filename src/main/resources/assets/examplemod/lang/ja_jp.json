@@ -1,3 +1,4 @@
 {
-  "block.examplemod.block_myblock": "マイブロック"
+  "block.examplemod.block_myblock": "マイブロック",
+  "block.examplemod.block_fortune": "占いブロック"
 }
