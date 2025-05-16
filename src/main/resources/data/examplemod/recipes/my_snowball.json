@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:snowball"
+    },
+    "B": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "item": "examplemod:my_snowball",
+    "count": 1
+  }
+}
