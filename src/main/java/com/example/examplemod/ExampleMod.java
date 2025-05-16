@@ -5,6 +5,7 @@ import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
 import com.example.examplemod.mc_04_hipotion.ItemHiPotion;
+import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
 import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
 import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
@@ -69,6 +70,9 @@ public class ExampleMod {
     public static final Item ITEM_MY_SNOWBALL =
             new ItemMySnowball().setRegistryName(MODID, "my_snowball");
 
+    public static final Item ITEM_MY_SWORD =
+            new ItemMySword().setRegistryName(MODID, "my_sword");
+
     public ExampleMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -99,7 +103,8 @@ public class ExampleMod {
                 // ここにItemを書いてね！
                 ITEM_MAGIC_STICK,
                 ITEM_HI_POTION,
-                ITEM_MY_SNOWBALL
+                ITEM_MY_SNOWBALL,
+                ITEM_MY_SWORD
         };
 
         @SubscribeEvent
