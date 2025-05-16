@@ -9,6 +9,7 @@ import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
 import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
 import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
 import com.example.examplemod.mc_10_snowball_fight.ItemMySnowball;
+import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceKey;
@@ -52,6 +53,9 @@ public class ExampleMod {
     public static final Block BLOCK_RAINBOW =
             new BlockRainbow().setRegistryName(MODID, "block_rainbow");
 
+    public static final Block BLOCK_BUILDING =
+            new BlockBuilding().setRegistryName(MODID, "block_building_block");
+
     // Entity
     public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
             EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
@@ -93,6 +97,7 @@ public class ExampleMod {
                 new RegisterBlockData(BLOCK_MYBLOCK),
                 new RegisterBlockData(BLOCK_FORTUNE),
                 new RegisterBlockData(BLOCK_RAINBOW),
+                new RegisterBlockData(BLOCK_BUILDING)
         };
 
         private static final Item[] registerItems = {
