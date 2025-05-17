@@ -9,6 +9,7 @@ import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
 import com.example.examplemod.mc_07_soundblock.BlockSound;
 import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
+import com.example.examplemod.mc_09_redstone.BlockSensor;
 import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
 import com.example.examplemod.mc_10_snowball_fight.ItemMySnowball;
 import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
@@ -61,6 +62,9 @@ public class ExampleMod {
     public static final Block BLOCK_SOUND =
             new BlockSound().setRegistryName(MODID, "block_sound");
 
+    public static final Block BLOCK_SENSOR =
+            new BlockSensor().setRegistryName(MODID, "block_sensor");
+
     // Entity
     public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
             EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
@@ -106,7 +110,8 @@ public class ExampleMod {
                 new RegisterBlockData(BLOCK_FORTUNE),
                 new RegisterBlockData(BLOCK_RAINBOW),
                 new RegisterBlockData(BLOCK_BUILDING),
-                new RegisterBlockData(BLOCK_SOUND)
+                new RegisterBlockData(BLOCK_SOUND),
+                new RegisterBlockData(BLOCK_SENSOR)
         };
 
         private static final Item[] registerItems = {
