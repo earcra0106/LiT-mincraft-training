@@ -13,10 +13,14 @@ import com.example.examplemod.mc_09_redstone.BlockSensor;
 import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
 import com.example.examplemod.mc_10_snowball_fight.ItemMySnowball;
 import com.example.examplemod.mc_11_footprints_sand.BlockFootprintsSand;
+import com.example.examplemod.mc_12_biome.BiomeMyBiome;
+import com.example.examplemod.mc_12_biome.MyBiomeProvider;
 import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
@@ -35,8 +39,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import terrablender.api.BiomeProviders;
 
 @Mod(ExampleMod.MODID)
 public class ExampleMod {
@@ -89,6 +95,10 @@ public class ExampleMod {
     public static final Item ITEM_MY_SWORD =
             new ItemMySword().setRegistryName(MODID, "my_sword");
 
+    // Biome
+    public static final ResourceKey<Biome> MY_BIOME =
+            ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MODID, "my_biome"));
+
     public ExampleMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -99,7 +109,9 @@ public class ExampleMod {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(() -> {
+            BiomeProviders.register(new MyBiomeProvider(new ResourceLocation(MODID, "biome_provider"), 50));
+        });
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -130,6 +142,12 @@ public class ExampleMod {
         @SubscribeEvent
         public static void onBiomeRegistry(final RegistryEvent.Register<Biome> event) {
 
+        }
+
+        @SubscribeEvent
+        public static void registerBiomes(RegistryEvent.Register<Biome> event) {
+            IForgeRegistry<Biome> registry = event.getRegistry();
+            registry.register(BiomeMyBiome.makeMyBiome().setRegistryName(MY_BIOME.location()));
         }
 
         @SubscribeEvent
