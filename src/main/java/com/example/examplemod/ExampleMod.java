@@ -15,9 +15,12 @@ import com.example.examplemod.mc_10_snowball_fight.ItemMySnowball;
 import com.example.examplemod.mc_11_footprints_sand.BlockFootprintsSand;
 import com.example.examplemod.mc_12_biome.BiomeMyBiome;
 import com.example.examplemod.mc_12_biome.MyBiomeProvider;
+import com.example.examplemod.mc_13_explosive_arrow.EntityExplosiveArrow;
+import com.example.examplemod.mc_13_explosive_arrow.ItemExplosiveArrow;
 import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import com.example.examplemod.mc_13_explosive_arrow.RenderExplosiveArrow;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -82,6 +85,12 @@ public class ExampleMod {
                     .setShouldReceiveVelocityUpdates(true)
                     .build("my_snowball");
 
+    public static final EntityType<EntityExplosiveArrow> ENTITY_EXPLOSIVE_ARROW =
+            EntityType.Builder.<EntityExplosiveArrow>of(EntityExplosiveArrow::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("explosive_arrow");
+
     // Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
@@ -94,6 +103,9 @@ public class ExampleMod {
 
     public static final Item ITEM_MY_SWORD =
             new ItemMySword().setRegistryName(MODID, "my_sword");
+
+    public static final Item ITEM_EXPLOSIVE_ARROW =
+            new ItemExplosiveArrow().setRegistryName(MODID, "explosive_arrow");
 
     // Biome
     public static final ResourceKey<Biome> MY_BIOME =
@@ -116,6 +128,7 @@ public class ExampleMod {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
+        EntityRenderers.register(ENTITY_EXPLOSIVE_ARROW, RenderExplosiveArrow::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -136,7 +149,8 @@ public class ExampleMod {
                 ITEM_MAGIC_STICK,
                 ITEM_HI_POTION,
                 ITEM_MY_SNOWBALL,
-                ITEM_MY_SWORD
+                ITEM_MY_SWORD,
+                ITEM_EXPLOSIVE_ARROW
         };
 
         @SubscribeEvent
@@ -158,6 +172,7 @@ public class ExampleMod {
         @SubscribeEvent
         public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(ENTITY_MY_SNOWBALL.setRegistryName(MODID, "my_snowball"));
+            event.getRegistry().register(ENTITY_EXPLOSIVE_ARROW.setRegistryName(MODID, "explosive_arrow"));
         }
 
         // ======================================================================================================
