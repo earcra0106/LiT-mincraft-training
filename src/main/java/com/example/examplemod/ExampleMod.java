@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.BlockCopier.BlockCopier;
 import com.example.examplemod.javaskip.PlayerDeathEventHandler;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
@@ -107,6 +108,9 @@ public class ExampleMod {
     public static final Item ITEM_EXPLOSIVE_ARROW =
             new ItemExplosiveArrow().setRegistryName(MODID, "explosive_arrow");
 
+    public static final Item ITEM_BLOCK_COPIER =
+            new BlockCopier().setRegistryName(MODID, "block_copier");
+
     // Biome
     public static final ResourceKey<Biome> MY_BIOME =
             ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MODID, "my_biome"));
@@ -150,7 +154,8 @@ public class ExampleMod {
                 ITEM_HI_POTION,
                 ITEM_MY_SNOWBALL,
                 ITEM_MY_SWORD,
-                ITEM_EXPLOSIVE_ARROW
+                ITEM_EXPLOSIVE_ARROW,
+                ITEM_BLOCK_COPIER
         };
 
         @SubscribeEvent
