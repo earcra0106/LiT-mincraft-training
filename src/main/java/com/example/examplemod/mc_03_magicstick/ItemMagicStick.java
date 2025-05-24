@@ -6,6 +6,8 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Pig;
@@ -30,40 +32,63 @@ public class ItemMagicStick extends Item {
         Level level = pTarget.level;
         BlockPos spawnPos = pTarget.blockPosition();
 
-        LivingEntity entity;
-        if (pTarget instanceof Villager) {
-            entity = new Zombie(level);
-        } else {
-            entity = new Pig(EntityType.PIG, level);
-        }
+        // LivingEntity entity;
+        // if (pTarget instanceof Villager) {
+        //     entity = new Zombie(level);
+        // } else {
+        //     entity = new Pig(EntityType.PIG, level);
+        // }
+        //
+        // entity.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+        //
+        // // 攻撃したエンティティを保存する
+        // if (!level.isClientSide && pAttacker instanceof Player) {
+        //     // エンティティのレジストリ名を取得
+        //     ResourceLocation entityName = pTarget.getType().getRegistryName();
+        //
+        //     // エンティティのレジストリ名がnullでない場合
+        //     if (entityName != null) {
+        //         // タグを作成
+        //         CompoundTag entityTag = new CompoundTag();
+        //         // タグにエンティティのレジストリ名を保存
+        //         entityTag.putString("clicked_entity", entityName.toString());
+        //         // ItemMagicStickのスタックにタグを保存
+        //         pStack.getOrCreateTag().put("clicked_entity", entityTag);
+        //
+        //         ((Player) pAttacker).displayClientMessage(new TextComponent("エンティティを保存しました: " + pTarget.getType().getRegistryName()), true);
+        //     // エンティティのレジストリ名がnullの場合
+        //     } else {
+        //         ((Player) pAttacker).displayClientMessage(new TextComponent("無効なエンティティです。"), true);
+        //     }
+        // }
+        //
+        // if (!pAttacker.level.isClientSide) {
+        //     ServerLevel serverLevel = (ServerLevel) pAttacker.level;
+        //     serverLevel.tryAddFreshEntityWithPassengers(entity);
+        //     serverLevel.removeEntity(pTarget);
+        // }
 
-        entity.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-
-        // 攻撃したエンティティを保存する
+        // 同じ敵に対して10回攻撃したらポーション効果を付与
         if (!level.isClientSide && pAttacker instanceof Player) {
-            // エンティティのレジストリ名を取得
-            ResourceLocation entityName = pTarget.getType().getRegistryName();
+            String uuid = pTarget.getStringUUID();
 
-            // エンティティのレジストリ名がnullでない場合
-            if (entityName != null) {
-                // タグを作成
-                CompoundTag entityTag = new CompoundTag();
-                // タグにエンティティのレジストリ名を保存
-                entityTag.putString("clicked_entity", entityName.toString());
-                // ItemMagicStickのスタックにタグを保存
-                pStack.getOrCreateTag().put("clicked_entity", entityTag);
+            CompoundTag targetUuidTag = pStack.getOrCreateTag();
 
-                ((Player) pAttacker).displayClientMessage(new TextComponent("エンティティを保存しました: " + pTarget.getType().getRegistryName()), true);
-            // エンティティのレジストリ名がnullの場合
+            if (!targetUuidTag.contains(uuid)) {
+                targetUuidTag.putInt(uuid, 1);
             } else {
-                ((Player) pAttacker).displayClientMessage(new TextComponent("無効なエンティティです。"), true);
+                targetUuidTag.putInt(uuid, targetUuidTag.getInt(uuid) + 1);
             }
-        }
 
-        if (!pAttacker.level.isClientSide) {
-            ServerLevel serverLevel = (ServerLevel) pAttacker.level;
-            serverLevel.tryAddFreshEntityWithPassengers(entity);
-            serverLevel.removeEntity(pTarget);
+            if (targetUuidTag.getInt(uuid) >= 10) {
+                pTarget.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 200, 1));
+                targetUuidTag.putInt(uuid, 0);
+                ((Player) pAttacker).displayClientMessage(new TextComponent("ポーション効果を付与しました。"), true);
+            } else {
+                ((Player) pAttacker).displayClientMessage(new TextComponent("あと" + (10 - targetUuidTag.getInt(uuid)) + "回攻撃してください。"), true);
+            }
+
+            pStack.setTag(targetUuidTag);
         }
 
         return super.hurtEnemy(pStack, pTarget, pAttacker);
