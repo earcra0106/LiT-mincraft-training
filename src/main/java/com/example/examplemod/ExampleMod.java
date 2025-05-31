@@ -18,6 +18,8 @@ import com.example.examplemod.mc_12_biome.BiomeMyBiome;
 import com.example.examplemod.mc_12_biome.MyBiomeProvider;
 import com.example.examplemod.mc_13_explosive_arrow.EntityExplosiveArrow;
 import com.example.examplemod.mc_13_explosive_arrow.ItemExplosiveArrow;
+import com.example.examplemod.mc_14_bull_fighting.EntityBull;
+import com.example.examplemod.mc_14_bull_fighting.RenderBull;
 import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -30,6 +32,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.BiomeDictionary;
@@ -92,6 +95,13 @@ public class ExampleMod {
                     .setShouldReceiveVelocityUpdates(true)
                     .build("explosive_arrow");
 
+    public static final EntityType<EntityBull> ENTITY_BULL =
+            EntityType.Builder.of(EntityBull::new, MobCategory.CREATURE)
+                    .sized(0.9F, 1.4F) // 牛のサイズ
+                    .setTrackingRange(32) // 描画範囲
+                    .setShouldReceiveVelocityUpdates(true) // 速度更新を有効にする
+                    .build("bull"); // エンティティの名前
+
     // Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
@@ -110,6 +120,14 @@ public class ExampleMod {
 
     public static final Item ITEM_BLOCK_COPIER =
             new BlockCopier().setRegistryName(MODID, "block_copier");
+
+    public static final Item BULL_SPAWN_EGG =
+            new SpawnEggItem(
+                    ENTITY_BULL,
+                    0x00FF00, // 緑
+                    0x0000FF, // 青
+                    new Item.Properties().tab(CreativeModeTab.TAB_MISC)
+            ).setRegistryName(MODID, "bull_spawn_egg");
 
     // Biome
     public static final ResourceKey<Biome> MY_BIOME =
@@ -133,6 +151,7 @@ public class ExampleMod {
     private void doClientStuff(final FMLClientSetupEvent event) {
         EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
         EntityRenderers.register(ENTITY_EXPLOSIVE_ARROW, RenderExplosiveArrow::new);
+        EntityRenderers.register(ENTITY_BULL, RenderBull::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -155,7 +174,8 @@ public class ExampleMod {
                 ITEM_MY_SNOWBALL,
                 ITEM_MY_SWORD,
                 ITEM_EXPLOSIVE_ARROW,
-                ITEM_BLOCK_COPIER
+                ITEM_BLOCK_COPIER,
+                BULL_SPAWN_EGG
         };
 
         @SubscribeEvent
@@ -171,13 +191,14 @@ public class ExampleMod {
 
         @SubscribeEvent
         public static void onAttributeCreation(final EntityAttributeCreationEvent event) {
-
+            event.put(ENTITY_BULL, EntityBull.registerAttributes().build()); // 牛の属性を登録
         }
 
         @SubscribeEvent
         public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(ENTITY_MY_SNOWBALL.setRegistryName(MODID, "my_snowball"));
             event.getRegistry().register(ENTITY_EXPLOSIVE_ARROW.setRegistryName(MODID, "explosive_arrow"));
+            event.getRegistry().register(ENTITY_BULL.setRegistryName(MODID, "bull"));
         }
 
         // ======================================================================================================
