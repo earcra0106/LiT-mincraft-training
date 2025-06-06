@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class RenderTobisuke extends MobRenderer<EntityTobisuke, ModelTobisuke<EntityTobisuke>> {
     private static final ResourceLocation tobisukeTexture
-            = new ResourceLocation(ExampleMod.MODID, "textures/entity/tobisuke.png");
+            = new ResourceLocation(ExampleMod.MODID, "textures/entity/original_tobisuke.png");
     public static final ModelLayerLocation modelLayerLocation
             = new ModelLayerLocation(new ResourceLocation(ExampleMod.MODID, "tobisuke"), "tobisuke");
 

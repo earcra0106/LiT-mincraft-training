@@ -21,7 +21,7 @@ import com.example.examplemod.mc_13_explosive_arrow.ItemExplosiveArrow;
 import com.example.examplemod.mc_14_bull_fighting.EntityBull;
 import com.example.examplemod.mc_14_bull_fighting.RenderBull;
 import com.example.examplemod.mc_15_tobisuke.EntityTobisuke;
-import com.example.examplemod.mc_15_tobisuke.ModelTobisuke;
+import com.example.examplemod.mc_15_tobisuke.ModelOriginalTobisuke;
 import com.example.examplemod.mc_15_tobisuke.RenderTobisuke;
 import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import com.example.examplemod.mc_tips_countblock.BlockCount;
@@ -229,7 +229,7 @@ public class ExampleMod {
             event.getRegistry().register(ENTITY_EXPLOSIVE_ARROW.setRegistryName(MODID, "explosive_arrow"));
             event.getRegistry().register(ENTITY_BULL.setRegistryName(MODID, "bull"));
             event.getRegistry().register(ENTITY_TOBISUKE.setRegistryName(MODID, "tobisuke"));
-            ForgeHooksClient.registerLayerDefinition(RenderTobisuke.modelLayerLocation, ModelTobisuke::createLayer);
+            ForgeHooksClient.registerLayerDefinition(RenderTobisuke.modelLayerLocation, ModelOriginalTobisuke::createLayer);
         }
 
         // ======================================================================================================
